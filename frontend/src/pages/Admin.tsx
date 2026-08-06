@@ -1,96 +1,100 @@
 import { useState } from "react";
-import API from "../services/api";
+import api from "../services/api";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
 
 export default function Admin() {
   const [title, setTitle] = useState("");
+  const [type, setType] = useState("notes");
+  const [semester, setSemester] = useState(1);
   const [subject, setSubject] = useState("");
-  const [semester, setSemester] = useState("");
-  const [category, setCategory] = useState("notes");
-  const [file, setFile] = useState<File | null>(null);
+  const [pdfUrl, setPdfUrl] = useState("");
 
-  const uploadFile = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!file) {
-      alert("Please select a PDF file");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("subject", subject);
-    formData.append("semester", semester);
-    formData.append("category", category);
-    formData.append("file", file);
-
     try {
-      const res = await API.post("/resources/upload", formData);
+      await api.post("/api/resources", {
+        title,
+        type,
+        semester,
+        subject,
+        pdfUrl,
+      });
 
-      alert(res.data.message);
+      alert("✅ Resource Added Successfully");
 
       setTitle("");
+      setType("notes");
+      setSemester(1);
       setSubject("");
-      setSemester("");
-      setCategory("notes");
-      setFile(null);
-    } catch (err: any) {
-      alert(err.response?.data?.message || "Upload Failed");
+      setPdfUrl("");
+
+    } catch (err) {
+      alert("❌ Failed to Add Resource");
     }
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "30px auto" }}>
-      <h1>Admin Upload</h1>
+    <>
+      <Navbar />
 
-      <form onSubmit={uploadFile}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <br /><br />
+      <div className="max-w-2xl mx-auto py-10 px-6">
+        <h1 className="text-4xl font-bold text-blue-700 mb-8">
+          Admin Panel
+        </h1>
 
-        <input
-          type="text"
-          placeholder="Subject"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-        />
-        <br /><br />
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-        <input
-          type="number"
-          placeholder="Semester"
-          value={semester}
-          onChange={(e) => setSemester(e.target.value)}
-        />
-        <br /><br />
+          <input
+            className="w-full border p-3 rounded"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
 
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="notes">Notes</option>
-          <option value="pyq">PYQ</option>
-          <option value="syllabus">Syllabus</option>
-          <option value="ebooks">Ebooks</option>
-        </select>
+          <select
+            className="w-full border p-3 rounded"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="notes">Notes</option>
+            <option value="pyq">PYQ</option>
+            <option value="syllabus">Syllabus</option>
+            <option value="ebooks">E-books</option>
+          </select>
 
-        <br /><br />
+          <input
+            className="w-full border p-3 rounded"
+            type="number"
+            value={semester}
+            onChange={(e) => setSemester(Number(e.target.value))}
+          />
 
-        <input
-          type="file"
-          accept=".pdf"
-          onChange={(e) =>
-            setFile(e.target.files ? e.target.files[0] : null)
-          }
-        />
+          <input
+            className="w-full border p-3 rounded"
+            placeholder="Subject"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+          />
 
-        <br /><br />
+          <input
+            className="w-full border p-3 rounded"
+            placeholder="PDF URL"
+            value={pdfUrl}
+            onChange={(e) => setPdfUrl(e.target.value)}
+          />
 
-        <button type="submit">Upload PDF</button>
-      </form>
-    </div>
+          <button
+            className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700"
+          >
+            Add Resource
+          </button>
+
+        </form>
+      </div>
+
+      <Footer />
+    </>
   );
 }

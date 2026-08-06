@@ -6,27 +6,29 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-      const res = await API.post("/auth/register", {
-        name,
-        email,
-        password,
-      });
+  try {
+    const res = await api.post("/api/auth/register", {
+      name,
+      email,
+      password,
+    });
 
-      alert(res.data.message);
-    } catch (err: any) {
-      alert(err.response?.data?.message || "Registration Failed");
-    }
-  };
+    alert("Registration Successful!");
+    console.log(res.data);
+
+  } catch (err: any) {
+    alert(err.response?.data?.message || "Registration Failed");
+  }
+};
 
   return (
     <div style={{ padding: "30px", maxWidth: "400px", margin: "auto" }}>
       <h1>Register</h1>
 
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Name"

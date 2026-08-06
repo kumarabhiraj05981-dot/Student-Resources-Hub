@@ -6,25 +6,31 @@ const resourceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    subject: {
-      type: String,
-      required: true,
-    },
-    semester: {
-      type: Number,
-      required: true,
-    },
-    category: {
+
+    type: {
       type: String,
       enum: ["notes", "pyq", "syllabus", "ebooks"],
       required: true,
     },
-    fileUrl: {
+
+    semester: {
+      type: Number,
+      required: true,
+    },
+
+    subject: {
+      type: String,
+      required: true,
+    },
+
+    pdfUrl: {
       type: String,
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 module.exports = mongoose.model("Resource", resourceSchema);

@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 
 import Footer from "../components/layout/Footer";
@@ -25,11 +25,11 @@ export default function Home() {
       Free, fast and easy to use for every student.
     </p>
 
-    <div className="mt-10">
-      <button className="bg-white text-blue-700 px-8 py-4 rounded-xl text-lg font-bold shadow-lg hover:scale-105 transition">
-        🚀 Explore Resources
-      </button>
-    </div>
+    <Link to="/notes">
+  <button className="mt-10 bg-white text-blue-700 px-8 py-4 rounded-xl text-lg font-bold shadow-lg hover:scale-105 transition">
+    🚀 Explore Resources
+  </button>
+</Link>
 
   </div>
 </section>
