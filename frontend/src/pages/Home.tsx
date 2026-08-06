@@ -1,8 +1,8 @@
-import Categories from "../components/home/Categories";
+
 import Navbar from "../components/layout/Navbar";
 
 import Footer from "../components/layout/Footer";
-import Categories from "../components/home/Categories";
+
 
 export default function Home() {
   return (
