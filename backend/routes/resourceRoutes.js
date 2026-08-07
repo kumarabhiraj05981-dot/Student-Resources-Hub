@@ -23,20 +23,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
-// Delete Resource
-router.delete("/:id", async (req, res) => {
-  try {
-    await Resource.findByIdAndDelete(req.params.id);
-
-    res.json({
-      success: true,
-      message: "Resource Deleted",
-    });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 // Update Resource
 router.put("/:id", async (req, res) => {
   try {
@@ -51,3 +37,19 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+// Delete Resource
+router.delete("/:id", async (req, res) => {
+  try {
+    await Resource.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "Resource Deleted",
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+module.exports = router;

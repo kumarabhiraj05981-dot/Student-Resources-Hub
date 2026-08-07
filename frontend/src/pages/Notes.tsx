@@ -40,40 +40,29 @@ export default function Notes() {
       <section className="max-w-7xl mx-auto py-12 px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-          {notes.length > 0 ? (
-            notes.map((note: any) => (
-              <div
-                key={note._id}
-                className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition"
+          {notes.map((note: any) => (
+            <div
+              key={note._id}
+              className="bg-white rounded-2xl shadow-lg p-6"
+            >
+              <h2 className="text-2xl font-bold text-blue-700">
+                {note.title}
+              </h2>
+
+              <p className="mt-3">📚 {note.subject}</p>
+
+              <p>🎓 Semester {note.semester}</p>
+
+              <a
+                href={note.pdfUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block mt-5 bg-blue-600 text-white px-5 py-2 rounded"
               >
-                <h2 className="text-2xl font-bold text-blue-700">
-                  {note.title}
-                </h2>
-
-                <p className="mt-3 text-gray-600">
-                  📚 {note.subject}
-                </p>
-
-                <p className="text-gray-600">
-                  🎓 Semester {note.semester}
-                </p>
-
-                <a
-                  href={note.pdfUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <button className="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-                    📄 View PDF
-                  </button>
-                </a>
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center text-gray-500 text-xl">
-              No Notes Available
+                View PDF
+              </a>
             </div>
-          )}
+          ))}
 
         </div>
       </section>
